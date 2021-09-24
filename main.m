@@ -179,10 +179,35 @@ hold on
 plot(a6,'LineWidth', 2);
 hold on
 plot(a7,'LineWidth', 2);
-hold on
+hold off
 xlabel('NB Power[dBm]')
 ylabel('Shadow Fading')
 grid on
+
+r1 = round(d1)
+r2 = round(d2)
+r3 = round(d3)
+r4 = round(d4)
+r5 = round(d5)
+r6 = round(d6)
+r7 = round(d7)
+
+m1=max(r1(1,:));
+m2=max(r2(1,:)); 
+m3=max(r3(1,:)); 
+m4=max(r4(1,:)); 
+m5=max(r5(1,:)); 
+m6=max(r6(1,:)); 
+m7=max(r7(1,:)); 
+
+e1=estimate(m1);
+e2=estimate(m2);
+e3=estimate(m3);
+e4=estimate(m4);
+e5=estimate(m5);
+e6=estimate(m6);
+e7=estimate(m7);
+
 title ('Power and Shadow Fading')
 subplot(1,1,1)
 grid on
@@ -201,28 +226,32 @@ hold on
 plot(e7,'LineWidth', 2);
 hold off
 
-e1=estimate(d1);
-e2=estimate(d2);
-e3=estimate(d3);
-e4=estimate(d4);
-e5=estimate(d5);
-e6=estimate(d6);
-e7=estimate(d7);
-
 % Estimates recieved from http://fcmcvlab.iitkgp.ac.in/Exp2/Theory/expt2-theory.pdf
 
-function est = estimate(e1)
-    if all(e1 > 200) && all(e1 < 600)
-        est = -10
-    elseif all(e1 > 600) && all(e1 < 800)
-        est = -30
-    elseif all(e1 > 800) && all(e1 < 1000)
-        est = -41
-    else all(e1 > 1000)
-        est = -71    
-    end
-    return
+function est = estimate(e)
+        if e < 5
+            est = 5
+        end
+        if e > 5 
+            if e < 10
+                est = 10
+            end
+        end
+        if e > 10 
+            if e < 30
+                est = 30
+            end
+        end
+        if e > 30
+            if e < 50
+                est = 41
+            end
+        end
+        if e > 50
+                est = 71
+        end
 end
+
 
 
 
