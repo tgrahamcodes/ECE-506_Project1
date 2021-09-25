@@ -79,7 +79,7 @@ plot(w,10*log10(abs(X).^2));
 grid on
 axis([-pi pi -125 -80])
 title('Doppler Spectrum')
-ylabel('Applitude[dB]');
+ylabel('Applitude[dB]')
 xlabel('Frequency')
 
 % Impulse Response of Multipath
@@ -134,10 +134,6 @@ xlabel('Samples')
 figure(5)
 subplot(1,1,1)
 plot(a_na,'LineWidth',2);
-xlabel('NB Power[dBm]')
-ylabel('Distance[m]')
-grid on
-title ('Narrowband Power vs Distance')
 plot(d1,'LineWidth',2);
 hold on
 plot(d2,'LineWidth',2);
@@ -152,20 +148,14 @@ plot(d6,'LineWidth', 2);
 hold on
 plot(d7,'LineWidth', 2);
 hold off
-
-% Path Loss Model for Enviornment 
-
-%Calculate received power
-% Vr = (a1*(exp(j*phi1)./d1)+a2*(exp(j*phi2)./d2)+a3*(exp(j*phi3)./d3)+a4*(exp(j*phi4)./d4)+a5*(exp(j*phi5)./d5)+a6*(exp(j*phi6)./d6)+a7*(exp(j*phi7)./d7));
-% Pr_dB_r = 10*log10(P0*abs(Vr.^2))
-
-% Transmitted/Recieved
-% total_t_pwr = a1 + a2 + a3 + a4 + a5 + a6 + a7;
-% pwr = total_t_pwr/a_na;
+grid on
+title ('Narrowband Power vs Distance')
+xlabel('NB Power[dBm]')
+ylabel('Distance[m]')
 
 % Narrowband Power vs Distance in meters
 figure(6)
-subplot(1,1,1)
+subplot(2,2,1)
 plot(a1,'LineWidth',2);
 hold on
 plot(a2,'LineWidth',2);
@@ -180,9 +170,6 @@ plot(a6,'LineWidth', 2);
 hold on
 plot(a7,'LineWidth', 2);
 hold off
-xlabel('NB Power[dBm]')
-ylabel('Shadow Fading')
-grid on
 
 r1 = round(d1)
 r2 = round(d2)
@@ -208,7 +195,6 @@ e5=estimate(m5);
 e6=estimate(m6);
 e7=estimate(m7);
 
-title ('Power and Shadow Fading')
 subplot(1,1,1)
 grid on
 plot(e1,'LineWidth',2);
@@ -226,8 +212,12 @@ hold on
 plot(e7,'LineWidth', 2);
 hold off
 
-% Estimates recieved from http://fcmcvlab.iitkgp.ac.in/Exp2/Theory/expt2-theory.pdf
+grid on
+title ('Power and Shadow Fading')
+xlabel('NB Power[dBm]')
+ylabel('Shadow Fading')
 
+%TODO
 function est = estimate(e)
         if e < 5
             est = 5
