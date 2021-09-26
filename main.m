@@ -48,6 +48,8 @@ a4=0.7.*a0./d4.*exp(1i.*phi4);
 a5=0.7.*a0./d5.*exp(1i.*phi5);
 a6=0.7.*a0./d6.*exp(1i.*phi6);
 a7=0.7.*a0./d7.*exp(1i.*phi7);
+a=[a1;a2;a3;a4;a5;a6;a7];
+
 
 % Total Power (Narrowband & Wideband)
 a_na=abs(a1+a2+a3+a4+a5+a6+a7); % narrow
@@ -79,7 +81,7 @@ plot(w,10*log10(abs(X).^2));
 grid on
 axis([-pi pi -125 -80])
 title('Doppler Spectrum')
-ylabel('Applitude[dB]')
+ylabel('Amplitude[dB]')
 xlabel('Frequency')
 
 % Impulse Response of Multipath
@@ -133,20 +135,9 @@ xlabel('Samples')
 % Narrowband Power vs Distance in meters
 figure(5)
 subplot(1,1,1)
-plot(a_na,'LineWidth',2);
-plot(d1,'LineWidth',2);
+plot(a,'LineWidth',2);
 hold on
-plot(d2,'LineWidth',2);
-hold on
-plot(d3,'LineWidth', 2);
-hold on
-plot(d4,'LineWidth', 2);
-hold on
-plot(d5,'LineWidth', 2);
-hold on
-plot(d6,'LineWidth', 2);
-hold on
-plot(d7,'LineWidth', 2);
+plot(d,'LineWidth',2);
 hold off
 grid on
 title ('Narrowband Power vs Distance')
@@ -208,7 +199,6 @@ ylabel('Shadow Fading')
 % plot(e7,'LineWidth', 2);
 % hold off
 
-
 % %TODO
 % function est = estimate(e)
 %         if e < 5
@@ -234,5 +224,57 @@ ylabel('Shadow Fading')
 %         end
 % end
 
+for dont_go_here = [] % part 3
+end
 
+% Doppler Spectrum using RT results
+a_d1=sqrt(d1 .* 1);
+a_d2=sqrt(d2 .* 2);
+a_d3=sqrt(d3 .* 3);
+a_d4=sqrt(d4 .* 4);
+a_d5=sqrt(d5 .* 5);
+a_d6=sqrt(d6 .* 6);
+a_d7=sqrt(d7 .* 7);
 
+D_n1=a_d1 .* (exp(2*pi * 1)).^2;
+D_n2=a_d2 .* (exp(2*pi * 2)).^2;
+D_n3=a_d3 .* (exp(2*pi * 3)).^2;
+D_n4=a_d4 .* (exp(2*pi * 4)).^2;
+D_n5=a_d5 .* (exp(2*pi * 5)).^2;
+D_n6=a_d6 .* (exp(2*pi * 6)).^2;
+D_n7=a_d7 .* (exp(2*pi * 7)).^2;
+
+% a_d1 = sqrt(a1)
+% a_d2 = sqrt(a2)
+% a_d3 = sqrt(a3)
+% a_d4 = sqrt(a4)
+% a_d5 = sqrt(a5)
+% a_d6 = sqrt(a6)
+% a_d7 = sqrt(a7)
+
+% w1 = (4*pi.*w);
+
+% w_n = [w1, w2, w3, w4, w5, w6, w7];
+
+figure(7) % part 3
+array_f_d=[D_n1, D_n2, D_n3, D_n4, D_n5, D_n6, D_n7];
+%array_a_d=[D_n1, D_n2, D_n3, D_n4, D_n5, D_n6, D_n7];
+plot(a, 'LineWidth', 2); % normalized doppler specturm
+hold on
+plot(w1, 'LineWidth',2);
+hold off
+grid on
+title ('Doppler Spectrum')
+% axis([-pi pi -125 -80])
+ylabel('Amplitude[dB]')
+xlabel('Frequency')
+
+%calculate path loss
+% lp(d) = l0(d) + 10 a log(d) + shadow_fading_co;
+% shadow_fading = 8;
+
+%calculate RMS % part 4(i)
+nume1 = t1.^2 .* a1.^2 + t2.^2 .* a2.^2 + t3.^2 .* a3.^2 + t4.^2 .* a4.^2 + t5.^2 .* a5.^2 + t6.^2 .* a6.^2 + t7.^2 .* a7.^2;
+nume2 = t1 .* a1.^2 + t2 .* a2.^2 + t3 .* a3.^2 + t4 .* a4.^2 + t5 .* a5.^2 + t6 .* a6.^2 + t7 .* a7.^2;
+denom = a1.^2 + a2.^2 + a3.^2 + a4.^2 + a5.^2 + a6.^2 + a7.^2;
+rms = (nume1 / denom) -  (nume2/denom).^2;
