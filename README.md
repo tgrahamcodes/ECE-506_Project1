@@ -1,1 +1,3 @@
-# ece506_project1
+# ECE506 Project
+
+Matlab for networking mathematics
